@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Event</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            width: 100%;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #dc3545;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 16px;
+            color: #343a40;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        button {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #c82333;
+        }
+        a {
+            display: block;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Are you sure you want to delete this event?</h1>
+        <p>{{ event.title }} - {{ event.date }} - {{ event.location }}</p>
+        <button id="delete-button">Yes, delete it</button>
+        <a href="{% url 'admin_dashboard' %}">Cancel</a>
+    </div>
+
+    <script>
+        document.getElementById('delete-button').addEventListener('click', function() {
+            fetch('/api/events/delete/{{ event.id }}/', {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',  // Add CSRF token to the headers
+                },
+            }).then(response => {
+                if (response.ok) {
+                    alert('Event deleted successfully!');
+                    window.location.href = '/admin-dashboard/';  // Redirect to admin dashboard after deletion
+                } else {
+                    alert('Failed to delete event.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

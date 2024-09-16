@@ -1,0 +1,17 @@
+<!-- events/templates/events/user.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Page</title>
+</head>
+<body>
+    <h1>Welcome, {{ user_profile.user.username }}</h1>
+    <p>Your role: {{ user_profile.get_role_display }}</p>
+    <p>Email: {{ user_profile.user.email }}</p>
+    <!-- Add more user-related information here -->
+    <a href="{% url 'user_page' %}">User Page</a>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!-- events/templates/events/view_event_registrations.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Event Registrations</title>
+</head>
+<body>
+    <h1>Event Registrations</h1>
+    <h2>Event: {{ event.title }}</h2>
+    <ul>
+        {% for registration in registrations %}
+        <li>
+            User: {{ registration.user.username }}<br>
+            Registered on: {{ registration.registration_date }}
+        </li>
+        {% empty %}
+        <li>No registrations yet.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'admin_dashboard' %}">Back to Admin Dashboard</a>
+</body>
+</html>

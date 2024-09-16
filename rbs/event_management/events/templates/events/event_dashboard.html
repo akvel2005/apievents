@@ -1,0 +1,26 @@
+<!-- event_dashboard.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Event Dashboard</title>
+</head>
+<body>
+    <h1>Available Events</h1>
+    <ul>
+        {% for event in events %}
+            <li>
+                <strong>{{ event.name }}</strong> - {{ event.date }}
+                {% if user.is_authenticated %}
+                    {% if not event.application_set.filter(user=request.user).exists %}
+                        <a href="{% url 'apply_for_event' event.id %}">Apply</a>
+                    {% else %}
+                        <span>You have already applied</span>
+                    {% endif %}
+                {% else %}
+                    <a href="{% url 'login' %}">Login to Apply</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

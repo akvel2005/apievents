@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        h1 {
+            color: #343a40;
+            text-align: center;
+        }
+        h2 {
+            color: #495057;
+            margin-top: 20px;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 10px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            padding: 10px;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .action-links a {
+            margin-right: 10px;
+        }
+        .action-links a:last-child {
+            margin-right: 0;
+        }
+        .logout {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .logout:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+
+        <h2>All Events</h2>
+        <ul>
+            {% for event in events %}
+                <li>
+                    {{ event.title }} - {{ event.date }} - {{ event.location }}
+                    <div class="action-links">
+                        <a href="{% url 'update_event' event.id %}">Edit</a>
+                        <a href="{% url 'delete_event' event.id %}">Delete</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <h2>Create New Event</h2>
+        <a href="{% url 'create_event' %}">Create Event</a>
+
+        <h2>All Event Registrations</h2>
+        <ul>
+            {% for registration in event_registrations %}
+                <li>{{ registration.attendee.user.username }} - {{ registration.event.title }}</li>
+            {% endfor %}
+        </ul>
+
+        <a class="logout" href="{% url 'logout' %}">Logout</a>
+    </div>
+</body>
+</html>

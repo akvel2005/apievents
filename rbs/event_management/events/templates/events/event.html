@@ -1,0 +1,15 @@
+<!-- apply_for_event.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Apply for Event</title>
+</head>
+<body>
+    <h1>Apply for {{ event.name }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Apply</button>
+    </form>
+    <a href="{% url 'event_dashboard' %}">Back to Dashboard</a>
+</body>
+</html>

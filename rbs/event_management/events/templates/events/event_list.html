@@ -1,0 +1,48 @@
+<!-- events/templates/events/event_list.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event List</title>
+</head>
+<body>
+    <h2>All Events</h2>
+    <div id="events-container">
+        <!-- Events will be loaded here by JavaScript -->
+    </div>
+
+    <p id="no-events" style="display: none;">No events available at the moment.</p>
+
+    <script>
+        // Fetch event data from the API
+        fetch('/api/events/')
+            .then(response => response.json())
+            .then(data => {
+                const eventsContainer = document.getElementById('events-container');
+                const noEventsMsg = document.getElementById('no-events');
+
+                if (data.length > 0) {
+                    // Loop through the event data and add it to the page
+                    data.forEach(event => {
+                        const eventItem = document.createElement('div');
+                        eventItem.innerHTML = `
+                            <h3>${event.title}</h3>
+                            <p>${event.description}</p>
+                            <p>Date: ${event.date}</p>
+                            <p>Location: ${event.location}</p>
+                        `;
+                        eventsContainer.appendChild(eventItem);
+                    });
+                } else {
+                    // Show "No events available" message
+                    noEventsMsg.style.display = 'block';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching events:', error);
+            });
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Dashboard</title>
+</head>
+<body>
+    <h1>Welcome to the Event Dashboard</h1>
+    
+    <h2>Available Events</h2>
+    <ul>
+        {% for event in events %}
+        <li>
+            <strong>{{ event.title }}</strong><br>
+            Description: {{ event.description }}<br>
+            Date: {{ event.date }}<br>
+            Location: {{ event.location }}<br>
+
+            {% if event.id in registered_events_ids %}
+                <button disabled>You are already registered for this event</button>
+            {% else %}
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="event_id" value="{{ event.id }}">
+                    <button type="submit">Register</button>
+                </form>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'user_dashboard' %}">Go to Dashboard</a>
+
+</body>
+</html>
